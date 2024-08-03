@@ -1,0 +1,128 @@
+/* profile.max.css */
+:root {
+	--bg: #007cff;
+	--bg-light: #f5f7fa;
+	--text-color: #333;
+	--border-radius: 10px;
+	--font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+	margin: 0;
+	font-family: var(--font-family);
+	background-color: var(--bg-light);
+	color: var(--text-color);
+  }
+  
+  header {
+	background: #fff;
+	padding: 20px;
+	text-align: center;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	border-radius: var(--border-radius);
+	width: 100%;
+  }
+  
+  .profile-picture {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	margin: 10px 0;
+  }
+  
+  .profile-name {
+	font-size: 28px;
+	font-weight: 700;
+	margin: 10px 0;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+  }
+  
+  .stats {
+	margin: 20px auto;
+	width: 90%;
+  }
+  
+  .stats table {
+	width: 100%;
+	border-collapse: collapse;
+  }
+  
+  .stats td {
+	padding: 10px;
+	font-size: 16px;
+  }
+  
+  .upload-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+  }
+  
+  .upload-label {
+	background-color: var(--bg);
+	color: #fff;
+	padding: 10px 15px;
+	border-radius: 5px;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	margin-right: 10px;
+	transition: background-color 0.3s;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+  }
+  
+  .upload-label:hover {
+	background-color: darken(var(--bg), 10%);
+  }
+  
+  .upload-button {
+	background-color: var(--bg);
+	color: #fff;
+	padding: 10px 15px;
+	border-radius: 5px;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+  }
+  
+  .upload-button:hover {
+	background-color: darken(var(--bg), 10%);
+  }
+  
+  .file-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Add bottom margin to avoid content touching the footer */
+}
+  
+  .file-card {
+	background: white;
+	border-radius: var(--border-radius);
+	padding: 20px;
+	margin: 20px;
+	width: 300px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	text-align: left;
+  }
+  
+  .file-name {
+	font-size: 18px;
+	font-weight: bold;
+  }
+  
+  .file-size {
+	font-size: 16px;
+	margin: 10px 0;
+	color: #666;
+  }

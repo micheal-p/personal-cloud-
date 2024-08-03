@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/images/ic.png">
+    <link rel="stylesheet" href="/static/css/profile.max.css" id="profile-stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.innerHeight / window.innerWidth < 3 / 5) {
+                document.getElementById('profile-stylesheet').href = "/static/css/profile.min.css";
+            }
+        });
+    </script>
+    <script src="/static/script/profile.js"></script>
+</head>
+<body>
+	<div class="container">
+		<header class="header">
+			<div class="profile">
+				<img src="/static/avatars/blank.png" alt="Profile Picture" class="profile-picture">
+				<div class="profile-info">
+					<h1 class="profile-name">{{name}}</h1>
+					<div class="profile-stats">
+						<div class="stat">
+							<span class="stat-label">Number of files:</span>
+							<span class="stat-value">{{nf}}</span>
+						</div>
+						<div class="stat">
+							<span class="stat-label">Total space used:</span>
+							<span class="stat-value">{{space}} MB</span>
+						</div>
+						<div class="stat">
+							<span class="stat-label">Space available:</span>
+							<span class="stat-value">
+								<script>
+									document.write((25 - ({{space}} / 1024)).toFixed(3) + " GB");
+								</script>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="upload-form">
+				<form method="POST" action="/upload/{{username}}/{{password}}/file" enctype="multipart/form-data">
+					<label class="upload-label">
+						<input type="file" name="files[]" multiple hidden>
+						<span class="upload-text">Select files</span>
+					</label>
+					<button type="submit" class="upload-button">Upload</button>
+				</form>
+			</div>
+		</header>
+
+		<main class="file-list">
+			{% for i in files %}
+			<div class="file-card">
+				<div class="file-name">{{i.name}}</div>
+				<div class="file-size">File size: {{i.size}}</div>
+				<div class="file-actions">
+					<a href="/delete/{{username}}/{{password}}/name/{{i.name}}">
+						<button class="file-button delete-button">Delete</button>
+					</a>
+					<a href="/download/{{username}}/{{password}}/name/{{i.name}}">
+						<button class="file-button download-button">Download</button>
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+		</main>
+	</div>
+
+	<script>
+		  document.addEventListener("DOMContentLoaded", function() {
+            function adjustHeight() {
+                const body = document.body;
+                const html = document.documentElement;
+                const contentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                html.style.height = contentHeight + "px";
+                body.style.height = contentHeight + "px";
+            }
+
+            adjustHeight();
+
+            // Re-adjust height when a new file card is added
+            const observer = new MutationObserver(adjustHeight);
+            observer.observe(document.querySelector('.file-list'), { childList: true });
+
+            window.addEventListener('resize', adjustHeight);
+        });
+
+        document.querySelector('input[type="file"]').addEventListener('change', function() {
+            const files = this.files;
+            const limit = 25600 - {{space}};
+            let totalSize = 0;
+            let valid = true;
+
+            for (let file of files) {
+                if (file.size / (1024 * 1024) > 2048) {
+                    valid = false;
+                    break;
+                }
+                totalSize += file.size / (1024 * 1024);
+            }
+
+            if (!valid || totalSize > limit) {
+                alert(valid ? "Storage is not available. Upload less or smaller files." : "File size should not be greater than 2GB");
+                this.value = "";
+            }
+        });
+	</script>
+</body>
+</html>
